@@ -18,9 +18,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
     private static final String TAG = "RecyclerviewAdapter";
 
     List<String> movieslist;
+    private RecyclerviewClickInterface recyclerviewClickInterface;
 
-    public RecyclerAdapter(List<String> movieslist) {
+    public RecyclerAdapter(List<String> movieslist,RecyclerviewClickInterface recyclerviewClickInterface) {
         this.movieslist = movieslist;
+        this.recyclerviewClickInterface=recyclerviewClickInterface;
     }
 
     @NonNull
@@ -48,7 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
         return movieslist.size();
     }
 
-    class Myviewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class Myviewholder extends RecyclerView.ViewHolder  {
         ImageView imageView;
         TextView textView,textView2;
 
@@ -59,24 +61,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
             textView =(TextView)itemView.findViewById(R.id.title) ;
             textView2= itemView.findViewById(R.id.desc);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerviewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    movieslist.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
+//                    movieslist.remove(getAdapterPosition());
+//                    notifyItemRemoved(getAdapterPosition());
+
+                    recyclerviewClickInterface.onLongItemClick(getAdapterPosition());
                     return true;
                 }
             });
 
         }
 
-        @Override
-        public void onClick(View v) {
-
-            //To know the adapter position use getAdapterPosition() method.
-
-            Toast.makeText(v.getContext(),movieslist.get(getAdapterPosition()),Toast.LENGTH_SHORT).show();
-        }
+//        @Override
+//        public void onClick(View v) {
+//
+//            //To know the adapter position use getAdapterPosition() method.
+//
+//            Toast.makeText(v.getContext(),movieslist.get(getAdapterPosition()),Toast.LENGTH_SHORT).show();
+//        }
     }
 }

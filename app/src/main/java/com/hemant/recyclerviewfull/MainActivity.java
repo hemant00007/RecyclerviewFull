@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerviewClickInterface{
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
     List<String> movieslist;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         movieslist = new ArrayList<>();
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        recyclerAdapter = new RecyclerAdapter(movieslist);
+        recyclerAdapter = new RecyclerAdapter(movieslist,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
         DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
@@ -69,20 +70,20 @@ public class MainActivity extends AppCompatActivity {
                 recyclerAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
 
-
-
-
             }
         });
 
+    }
 
+    @Override
+    public void onItemClick(int position) {
 
+        Toast.makeText(this,movieslist.get(position),Toast.LENGTH_SHORT).show();
+    }
 
-
-
-
-
-
-
+    @Override
+    public void onLongItemClick(int position) {
+        movieslist.remove(position);
+        recyclerAdapter.notifyItemRemoved(position);
     }
 }
