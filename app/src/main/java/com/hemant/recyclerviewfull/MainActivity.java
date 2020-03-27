@@ -54,6 +54,28 @@ public class MainActivity extends AppCompatActivity {
         movieslist.add("world war");
 
 
+        swipeRefreshLayout =(SwipeRefreshLayout)findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                movieslist.add("Refresh");
+                recyclerAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+
+
+
+
+            }
+        });
+
+
 
 
 

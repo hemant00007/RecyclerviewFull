@@ -5,14 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!-- SwipeRefresh layout is getting used-->
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+ <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/recyclerView"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_marginStart="5dp"
+     android:layout_marginTop="5dp" />
 
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/recyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_marginStart="5dp"
-      android:layout_marginTop="5dp" />
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
 
