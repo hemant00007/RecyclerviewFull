@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground">
+    android:background="@android:color/white"
+    android:foreground="?attr/selectableItemBackground">
 
 <!--    add ripple effect use android:background="?attr/selectableItemBackground" -->
 

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -89,9 +90,17 @@ public class MainActivity extends AppCompatActivity implements RecyclerviewClick
     String deletedMovie = null;
     List<String> archivedMovies = new ArrayList<>();
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT |ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN |ItemTouchHelper.START | ItemTouchHelper.END,
+            ItemTouchHelper.LEFT |ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+            int fromposition = viewHolder.getAdapterPosition();
+            int toPosiition =target.getAdapterPosition();
+            Collections.swap(movieslist,fromposition,toPosiition);
+            recyclerView.getAdapter().notifyItemMoved(fromposition,toPosiition);
+
+
             return false;
         }
 
