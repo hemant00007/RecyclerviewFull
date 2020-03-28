@@ -36,56 +36,39 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        movieslist.add("dhoom");
-        movieslist.add("Gunday");
-        movieslist.add("Qayamat");
-        movieslist.add("Shivaji");
-        movieslist.add("waqt");
-        movieslist.add("Good news");
-        movieslist.add("Dil");
-        movieslist.add("Mohabatte");
-        movieslist.add("dissum");
-        movieslist.add("har dil jo pyar karega");
-        movieslist.add("waada");
-        movieslist.add("asd");
-        movieslist.add("abcd");
-        movieslist.add("devdas");
-        movieslist.add("baazirao");
-        movieslist.add("world war");
-        movieslist.add("waada");
-        movieslist.add("asd");
-        movieslist.add("abcd");
-        movieslist.add("devdas");
-        movieslist.add("baazirao");
-        movieslist.add("world war");
+        movieslist.add("Iron Man");
+        movieslist.add("The Incredible Hulk");
+        movieslist.add("Iron Man 2");
+        movieslist.add("Thor");
+        movieslist.add("Captain America: The First Avenger");
+        movieslist.add("The Avengers");
+        movieslist.add("Iron Man 3");
+        movieslist.add("Thor: The Dark World");
+        movieslist.add("Captain America: The Winter Soldier");
+        movieslist.add("Guardians of the Galaxy");
+        movieslist.add("Avengers: Age of Ultron");
+        movieslist.add("Ant-Man");
+        movieslist.add("Captain America: Civil War");
+        movieslist.add("Doctor Strange");
+        movieslist.add("Guardians of the Galaxy Vol. 2");
+        movieslist.add("Spider-Man: Homecoming");
+        movieslist.add("Thor: Ragnarok");
+        movieslist.add("Black Panther");
+        movieslist.add("Avengers: Infinity War");
+        movieslist.add("Ant-Man and the Wasp");
+        movieslist.add("Captain Marvel");
+        movieslist.add("Avengers: Endgame");
+        movieslist.add("Spider-Man: Far From Home");
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerAdapter = new RecyclerAdapter(movieslist);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
+
         DividerItemDecoration decoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(decoration);
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView)item.getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                recyclerAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
 }
