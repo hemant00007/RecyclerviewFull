@@ -7,10 +7,7 @@
 
 <!-- SwipeRefresh layout is getting used-->
 
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipe_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
 
  <androidx.recyclerview.widget.RecyclerView
      android:id="@+id/recyclerView"
@@ -20,7 +17,6 @@
      android:layout_marginTop="5dp" />
 
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 

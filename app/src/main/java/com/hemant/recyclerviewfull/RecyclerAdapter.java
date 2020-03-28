@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,18 +13,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myviewholder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myviewholder> implements Filterable {
 
     private static final String TAG = "RecyclerviewAdapter";
 
     List<String> movieslist;
-    private RecyclerviewClickInterface recyclerviewClickInterface;
+    List<String> moviesListAll;
 
-    public RecyclerAdapter(List<String> movieslist,RecyclerviewClickInterface recyclerviewClickInterface) {
+
+    public RecyclerAdapter(List<String> movieslist) {
         this.movieslist = movieslist;
-        this.recyclerviewClickInterface=recyclerviewClickInterface;
+        moviesListAll=new ArrayList<>();
+        moviesListAll.addAll(movieslist);
+
     }
 
     @NonNull
@@ -50,7 +58,47 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
         return movieslist.size();
     }
 
-    class Myviewholder extends RecyclerView.ViewHolder  {
+    @Override
+    public Filter getFilter() {
+        return myFilter;
+    }
+    Filter myFilter = new Filter() {
+
+
+        // Run on background Thread;
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            List<String > filteredlist = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length() == 0){
+                filteredlist.addAll(moviesListAll);
+
+            }else {
+                for (String movie: moviesListAll){
+
+                    if (movie.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                        filteredlist.add(movie);
+                    }
+
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredlist;
+            return filterResults;
+
+        }
+//Rup on Main Thread
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            movieslist.clear();
+            movieslist.addAll((Collection<? extends String>) filterResults.values);
+            notifyDataSetChanged();
+        }
+
+    };
+
+    class Myviewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView textView,textView2;
 
@@ -61,31 +109,42 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myview
             textView =(TextView)itemView.findViewById(R.id.title) ;
             textView2= itemView.findViewById(R.id.desc);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    recyclerviewClickInterface.onItemClick(getAdapterPosition());
-                }
-            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-//                    movieslist.remove(getAdapterPosition());
-//                    notifyItemRemoved(getAdapterPosition());
+            itemView.setOnClickListener(this);
 
-                    recyclerviewClickInterface.onLongItemClick(getAdapterPosition());
-                    return true;
-                }
-            });
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    recyclerviewClickInterface.onItemClick(getAdapterPosition());
+//                }
+//            });
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+////                    movieslist.remove(getAdapterPosition());
+////                    notifyItemRemoved(getAdapterPosition());
+//
+//                    recyclerviewClickInterface.onLongItemClick(getAdapterPosition());
+//                    return true;
+//                }
+//            });
 
         }
 
-//        @Override
-//        public void onClick(View v) {
-//
-//            //To know the adapter position use getAdapterPosition() method.
-//
-//            Toast.makeText(v.getContext(),movieslist.get(getAdapterPosition()),Toast.LENGTH_SHORT).show();
-//        }
-    }
+        @Override
+        public void onClick(View v) {
+
+            Toast.makeText(v.getContext(),movieslist.get(getAdapterPosition()),Toast.LENGTH_SHORT).show();
+        }
+
+        }
+
+////        @Override
+////        public void onClick(View v) {
+////
+////            //To know the adapter position use getAdapterPosition() method.
+////
+////            Toast.makeText(v.getContext(),movieslist.get(getAdapterPosition()),Toast.LENGTH_SHORT).show();
+////        }
+//    }
 }
